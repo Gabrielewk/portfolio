@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gabriele Cossu — Photography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+
+  /* ── Light theme (default) ── */
+  :root{
+    --bg: #ffffff;
+    --ink: #111111;
+    --ink-soft: #6e6e6e;
+    --line: #e7e5e0;
+    --accent: #4a5a5e;
+    --ph-bg: #f1f0ec;
+    --flag-bg: rgba(17,17,17,0.45);
+    --flag-ink: rgba(255,255,255,0.85);
+    --lb-bg: rgba(17,17,17,0.97);
+
+    --mono: 'IBM Plex Mono', monospace;
+    --body: 'IBM Plex Mono', monospace;
+
+    --gutter: clamp(32px, 7vw, 80px);
+    --col-gap: clamp(10px, 2vw, 18px);
+  }
+
+  /* ── Dark theme ── */
+  html[data-theme="dark"]{
+    --bg: #131311;
+    --ink: #e9e7e1;
+    --ink-soft: #8b897f;
+    --line: #2b2b27;
+    --accent: #9fb3b8;
+    --ph-bg: #1d1d1a;
+    --flag-bg: rgba(233,231,225,0.14);
+    --flag-ink: rgba(233,231,225,0.85);
+    --lb-bg: rgba(8,8,7,0.97);
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--body);
+    -webkit-font-smoothing:antialiased;
+    transition:background .45s ease, color .45s ease;
+  }
+
+  a{ color:inherit; text-decoration:none; }
+
+  /* ── Header ── */
+  header{
+    display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:12px;
+    padding:34px var(--gutter) 26px;
+    animation:riseIn .7s cubic-bezier(.22,1,.36,1) both;
+  }
+
+  @keyframes riseIn{
+    from{ opacity:0; transform:translateY(10px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  .wordmark{
+    font-family:var(--mono);
+    font-weight:500;
+    font-size:14px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+  }
+
+  nav ul{ list-style:none; display:flex; gap:34px; align-items:center; }
+  nav a{
+    font-family:var(--mono);
+    font-size:13px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    position:relative;
+    padding-bottom:4px;
+  }
+
+  /* theme toggle — styled like the rest of the nav */
+  .theme-toggle{
+    background:none; border:none; cursor:pointer;
+    font-family:var(--mono); font-size:13px;
+    letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--ink-soft);
+    padding-bottom:4px;
+    transition:color .25s ease;
+  }
+  .theme-toggle:hover{ color:var(--ink); }
+  .theme-toggle:focus-visible{ outline:1px solid var(--ink); outline-offset:3px; }
+
+  /* ── Glitch hover (your signature) ── */
+  .moire{ position:relative; display:inline-block; }
+  .moire::before, .moire::after{
+    content:attr(data-text);
+    position:absolute; left:0; top:0;
+    white-space:nowrap;
+    pointer-events:none;
+    opacity:0;
+    transition:opacity .1s ease;
+  }
+  .moire::before{
+    clip-path:polygon(0 0, 100% 0, 100% 33%, 0 33%);
+    color:var(--ink);
+  }
+  .moire::after{
+    clip-path:polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+    color:var(--ink);
+  }
+  .moire:hover{ animation:glitch 1s linear infinite; }
+  .moire:hover::before{ opacity:0.9; animation:glitchTop 1s linear infinite; }
+  .moire:hover::after{ opacity:0.9; animation:glitchBottom 1.5s linear infinite; }
+
+  @keyframes glitch {
+    0%,30%,64%{ transform:translate(1px) skew(0deg); }
+    4%,60%    { transform:translate(0) skew(0deg); }
+    62%       { transform:translate(1px) skew(1deg); }
+  }
+  @keyframes glitchTop {
+    0%,30%,64%{ transform:translate(1px,-1px); }
+    4%,60%    { transform:translate(-1px,1px); }
+    62%       { transform:translate(13px,-1px) skew(-13deg); }
+  }
+  @keyframes glitchBottom {
+    0%,30%,64%{ transform:translate(-1px,0); }
+    4%,60%    { transform:translate(-1px,0); }
+    62%       { transform:translate(-22px,5px) skew(21deg); }
+  }
+
+  /* ── Intro ── */
+  .intro{
+    padding:24px var(--gutter) 6px;
+    display:flex; justify-content:center;
+    animation:riseIn .7s .15s cubic-bezier(.22,1,.36,1) both;
+  }
+  .intro-text{
+    font-family:var(--mono);
+    font-size:clamp(11px,0.85vw,13px);
+    line-height:1.9;
+    color:var(--ink-soft);
+    text-align:center;
+    max-width:960px;
+    letter-spacing:0.03em;
+  }
+
+  /* ── Grid ── */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(12,1fr);
+    column-gap:var(--col-gap);
+    row-gap:48px;
+    padding:48px var(--gutter) 90px;
+  }
+
+  .item{ display:flex; flex-direction:column; cursor:pointer; }
+
+  /* scroll reveal */
+  .item{
+    opacity:0;
+    transform:translateY(26px);
+    transition:opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1);
+    transition-delay:var(--d, 0s);
+  }
+  .item.in{ opacity:1; transform:translateY(0); }
+
+  .photo{
+    position:relative;
+    overflow:hidden;
+    aspect-ratio:4/5;
+    background:var(--ph-bg);
+  }
+  .photo .ph{
+    position:absolute; inset:0;
+    transition:transform .7s cubic-bezier(.22,1,.36,1);
+  }
+  .item:hover .photo .ph{ transform:scale(1.035); }
+
+  /* view hint on hover */
+  .photo::after{
+    content:'VIEW →';
+    position:absolute; left:12px; bottom:10px;
+    font-family:var(--mono); font-size:9px; letter-spacing:.12em;
+    color:var(--flag-ink);
+    background:var(--flag-bg);
+    padding:3px 7px;
+    opacity:0; transform:translateY(6px);
+    transition:opacity .3s ease, transform .3s ease;
+  }
+  .item:hover .photo::after{ opacity:1; transform:translateY(0); }
+
+  .placeholder-flag{
+    position:absolute; top:10px; right:10px;
+    font-family:var(--mono); font-size:9px; letter-spacing:.06em;
+    color:var(--flag-ink);
+    background:var(--flag-bg);
+    padding:3px 7px;
+  }
+
+  .cap{ margin-top:14px; }
+  .cap .title{
+    font-family:var(--body); font-weight:400; font-size:15px;
+    color:var(--ink); margin-bottom:3px;
+  }
+  .cap .meta{
+    font-family:var(--mono); font-size:11px; letter-spacing:.05em;
+    text-transform:uppercase; color:var(--ink-soft);
+  }
+
+  .item.p-half{ grid-column:span 6; }
+  .item.p-center{ grid-column:3 / span 8; }
+
+  /* ── Footer ── */
+  footer{
+    border-top:1px solid var(--line);
+    padding:26px var(--gutter) 44px;
+    display:flex; flex-wrap:wrap; gap:14px;
+    justify-content:space-between; align-items:center;
+    font-family:var(--mono); font-size:12px; letter-spacing:.04em;
+    color:var(--ink-soft); text-transform:uppercase;
+  }
+  footer .socials a{ margin-left:18px; color:var(--ink); }
+  footer .socials a:hover{ color:var(--accent); }
+
+  /* ── Lightbox ── */
+  .lightbox{
+    position:fixed; inset:0; z-index:60;
+    background:var(--lb-bg);
+    display:flex; align-items:center; justify-content:center;
+    opacity:0; visibility:hidden;
+    transition:opacity .35s ease;
+  }
+  .lightbox.open{ opacity:1; visibility:visible; }
+
+  .lightbox .box{
+    width:min(65vw,570px); max-height:82vh; aspect-ratio:4/5; position:relative;
+  }
+  .lightbox .ph{
+    position:absolute; inset:0;
+    transition:opacity .25s ease;
+  }
+  .lightbox .ph.swap{ opacity:0; }
+
+  .lightbox .info{
+    position:absolute; left:0; bottom:-44px;
+    font-family:var(--mono); font-size:12px; letter-spacing:.04em;
+    text-transform:uppercase; color:#fff;
+  }
+  .lightbox .counter{
+    position:absolute; top:-44px; left:0;
+    font-family:var(--mono); font-size:12px; letter-spacing:.08em;
+    color:rgba(255,255,255,0.6);
+  }
+  .lightbox .close{
+    position:absolute; top:-44px; right:0;
+    background:none; border:none; color:#fff;
+    font-family:var(--mono); font-size:12px; letter-spacing:.05em;
+    text-transform:uppercase; cursor:pointer;
+  }
+  .lightbox .arrow{
+    position:absolute; top:50%; transform:translateY(-50%);
+    background:none; border:none; color:#fff;
+    font-family:var(--mono); font-size:20px;
+    cursor:pointer; padding:18px 14px;
+    opacity:.65; transition:opacity .2s ease;
+    user-select:none;
+  }
+  .lightbox .arrow:hover{ opacity:1; }
+  .lightbox .arrow.prev{ left:calc(-1 * clamp(44px, 8vw, 90px)); }
+  .lightbox .arrow.next{ right:calc(-1 * clamp(44px, 8vw, 90px)); }
+  .lightbox .close:focus-visible,
+  .lightbox .arrow:focus-visible{ outline:1px solid #fff; outline-offset:3px; }
+
+  /* ── Custom cursor (mouse devices only) ── */
+  @media (pointer:fine){
+    body, a, button, .item, .album,
+    .theme-toggle, .lightbox .close, .lightbox .arrow{ cursor:none; }
+
+    .cursor-dot, .cursor-ring{
+      position:fixed; top:0; left:0;
+      pointer-events:none; z-index:200;
+      mix-blend-mode:difference; /* visible on any background, both themes */
+      opacity:0;
+    }
+    body.cursor-active .cursor-dot,
+    body.cursor-active .cursor-ring{ opacity:1; }
+
+    .cursor-dot{
+      width:5px; height:5px;
+      background:#fff; border-radius:50%;
+      margin:-2.5px 0 0 -2.5px;
+    }
+    .cursor-ring{
+      width:22px; height:22px;
+      margin:-11px 0 0 -11px;
+      border:1px solid #fff; border-radius:50%;
+      transition:width .25s ease, height .25s ease, margin .25s ease,
+                 border-radius .25s ease, border-color .25s ease, opacity .25s ease;
+    }
+
+    /* over links & buttons: ring tightens */
+    .cursor-ring.on-link{
+      width:32px; height:32px; margin:-16px 0 0 -16px;
+    }
+
+    /* over photos: ring becomes a viewfinder — square with corner brackets */
+    .cursor-ring.on-photo{
+      width:58px; height:58px; margin:-29px 0 0 -29px;
+      border-radius:0; border-color:transparent;
+    }
+    .cursor-ring::before, .cursor-ring::after{
+      content:''; position:absolute;
+      width:13px; height:13px;
+      opacity:0; transition:opacity .25s ease;
+    }
+    .cursor-ring::before{ top:0; left:0; border-top:1px solid #fff; border-left:1px solid #fff; }
+    .cursor-ring::after{ bottom:0; right:0; border-bottom:1px solid #fff; border-right:1px solid #fff; }
+    .cursor-ring.on-photo::before, .cursor-ring.on-photo::after{ opacity:1; }
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .moire:hover, .moire:hover::before, .moire:hover::after{ animation:none; }
+    .item{ opacity:1; transform:none; transition:none; }
+    header, .intro{ animation:none; }
+  }
+
+  @media (max-width:780px){
+    .item.p-half, .item.p-center{ grid-column:span 12; }
+    nav ul{ gap:20px; }
+    .lightbox .box{ width:82vw; }
+    .lightbox .arrow.prev{ left:-38px; }
+    .lightbox .arrow.next{ right:-38px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="#" class="wordmark"><span class="moire" data-text="GABRIELE COSSU">GABRIELE COSSU</span></a>
+  <nav>
+    <ul>
+      <li><a href="archives.html"><span class="moire" data-text="Archives">Archives</span></a></li>
+      <li><a href="#contact"><span class="moire" data-text="Contact">Contact</span></a></li>
+      <li><button class="theme-toggle" id="themeToggle" aria-label="Switch theme">[ Dark ]</button></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="intro">
+  <p class="intro-text">Photography is a powerful introspective tool; more than once I found myself wondering what brought me there, to picture-frame that moment... maybe the beauty of it? [looking at the picture] so is this how I perceive beauty? but what is beauty? I'm going down this rabbit hole, exploring the noetic concept of beauty through my camera</p>
+</section>
+
+<main id="work">
+  <section class="grid" id="grid"></section>
+</main>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+  <div class="box">
+    <span class="counter" id="lbCounter"></span>
+    <button class="close" id="lbClose">Close ✕</button>
+    <button class="arrow prev" id="lbPrev" aria-label="Previous photo">←</button>
+    <button class="arrow next" id="lbNext" aria-label="Next photo">→</button>
+    <div class="ph" id="lbImg"></div>
+    <div class="info" id="lbInfo"></div>
+  </div>
+</div>
+
+<footer id="contact">
+  <div>&copy;2026 GABRIELE COSSU</div>
+  <div class="socials">
+    <a href="https://www.instagram.com/gabrielewk/" target="_blank"><span class="moire" data-text="Instagram">Instagram</span></a>
+  </div>
+</footer>
+
+<script>
+/* ══════════ THEME TOGGLE ══════════ */
+const toggle = document.getElementById('themeToggle');
+
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  toggle.textContent = t === 'dark' ? '[ Light ]' : '[ Dark ]';
+  try{ localStorage.setItem('gc-theme', t); }catch(e){ /* preview environments may block storage */ }
+}
+
+let saved = null;
+try{ saved = localStorage.getItem('gc-theme'); }catch(e){}
+applyTheme(saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+
+toggle.addEventListener('click', () => {
+  const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  applyTheme(next);
+});
+
+/* ══════════ PROJECTS ══════════ */
+const projects = [
+  { title:"Granite Coastline",  cat:"Landscape", loc:"San Teodoro",       year:"2026", span:"p-half",   grad:"linear-gradient(135deg,#3c4a4f,#7c8b86)" },
+  { title:"Quiet Portrait",     cat:"Portrait",  loc:"Olbia",             year:"2026", span:"p-half",   grad:"linear-gradient(135deg,#8a6a4f,#cdb48f)" },
+  { title:"Market Morning",     cat:"Street",    loc:"Cagliari",          year:"2025", span:"p-center", grad:"linear-gradient(135deg,#6b5b4f,#b8881f)" },
+  { title:"Trail, First Light", cat:"Sport",     loc:"Monte Nieddu",      year:"2025", span:"p-half",   grad:"linear-gradient(135deg,#4f5a3c,#9fae7c)" },
+  { title:"Wide Open",          cat:"Landscape", loc:"Capo Coda Cavallo", year:"2026", span:"p-half",   grad:"linear-gradient(120deg,#111111,#3c4a4f,#cdb48f)" },
+];
+
+const grid = document.getElementById('grid');
+projects.forEach((p, i) => {
+  const el = document.createElement('div');
+  el.className = `item ${p.span}`;
+  el.style.setProperty('--d', `${(i % 2) * 0.12}s`); /* stagger pairs */
+  el.innerHTML = `
+    <div class="photo">
+      <div class="ph" style="background:${p.grad}"></div>
+      <span class="placeholder-flag">placeholder</span>
+    </div>
+    <div class="cap">
+      <div class="title"><span class="moire" data-text="${p.title}">${p.title}</span></div>
+      <div class="meta">${p.cat} / ${p.loc} / ${p.year}</div>
+    </div>
+  `;
+  el.addEventListener('click', () => openLightbox(i));
+  grid.appendChild(el);
+});
+
+/* ══════════ SCROLL REVEAL ══════════ */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.item').forEach(el => io.observe(el));
+
+/* ══════════ LIGHTBOX with prev/next + keyboard ══════════ */
+const lightbox = document.getElementById('lightbox');
+const lbImg = document.getElementById('lbImg');
+const lbInfo = document.getElementById('lbInfo');
+const lbCounter = document.getElementById('lbCounter');
+let current = 0;
+
+function renderLightbox(){
+  const p = projects[current];
+  lbImg.classList.add('swap');
+  setTimeout(() => {
+    lbImg.style.background = p.grad;
+    lbInfo.textContent = `${p.title} — ${p.cat} / ${p.loc} / ${p.year}`;
+    lbCounter.textContent = `${String(current+1).padStart(2,'0')} / ${String(projects.length).padStart(2,'0')}`;
+    lbImg.classList.remove('swap');
+  }, 130);
+}
+
+function openLightbox(i){
+  current = i;
+  const p = projects[current];
+  lbImg.style.background = p.grad;
+  lbInfo.textContent = `${p.title} — ${p.cat} / ${p.loc} / ${p.year}`;
+  lbCounter.textContent = `${String(current+1).padStart(2,'0')} / ${String(projects.length).padStart(2,'0')}`;
+  lightbox.classList.add('open');
+}
+function closeLightbox(){ lightbox.classList.remove('open'); }
+function step(dir){
+  current = (current + dir + projects.length) % projects.length;
+  renderLightbox();
+}
+
+document.getElementById('lbClose').addEventListener('click', closeLightbox);
+document.getElementById('lbPrev').addEventListener('click', e => { e.stopPropagation(); step(-1); });
+document.getElementById('lbNext').addEventListener('click', e => { e.stopPropagation(); step(1); });
+lightbox.addEventListener('click', e => { if(e.target === lightbox) closeLightbox(); });
+
+document.addEventListener('keydown', e => {
+  if(!lightbox.classList.contains('open')) return;
+  if(e.key === 'Escape') closeLightbox();
+  if(e.key === 'ArrowLeft') step(-1);
+  if(e.key === 'ArrowRight') step(1);
+});
+
+/* ══════════ CUSTOM VIEWFINDER CURSOR ══════════ */
+if (window.matchMedia('(pointer:fine)').matches) {
+  const dot = document.createElement('div');
+  const ring = document.createElement('div');
+  dot.className = 'cursor-dot';
+  ring.className = 'cursor-ring';
+  document.body.append(dot, ring);
+
+  const reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  let mx = innerWidth / 2, my = innerHeight / 2; // mouse
+  let rx = mx, ry = my;                          // ring (trails behind)
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    dot.style.transform = `translate(${mx}px, ${my}px)`;
+    document.body.classList.add('cursor-active');
+
+    const t = e.target;
+    if (t.closest('.photo, .cover, .lightbox .box')) {
+      ring.classList.add('on-photo');
+      ring.classList.remove('on-link');
+    } else if (t.closest('a, button')) {
+      ring.classList.add('on-link');
+      ring.classList.remove('on-photo');
+    } else {
+      ring.classList.remove('on-photo', 'on-link');
+    }
+  });
+
+  document.addEventListener('mouseleave', () => document.body.classList.remove('cursor-active'));
+  document.addEventListener('mouseenter', () => document.body.classList.add('cursor-active'));
+
+  (function loop(){
+    const ease = reduce ? 1 : 0.12; // no trailing if reduced motion
+    rx += (mx - rx) * ease;
+    ry += (my - ry) * ease;
+    ring.style.transform = `translate(${rx}px, ${ry}px)`;
+    requestAnimationFrame(loop);
+  })();
+}
+</script>
+
+</body>
+</html>
