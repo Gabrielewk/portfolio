@@ -204,6 +204,14 @@
     padding:3px 7px;
   }
 
+  .photo-count{
+    position:absolute; top:10px; left:10px;
+    font-family:var(--mono); font-size:9px; letter-spacing:.06em;
+    color:var(--flag-ink);
+    background:var(--flag-bg);
+    padding:3px 7px;
+  }
+
   .cap{ margin-top:14px; }
   .cap .title{
     font-family:var(--body); font-weight:400; font-size:15px;
@@ -216,6 +224,44 @@
 
   .item.p-half{ grid-column:span 6; }
   .item.p-center{ grid-column:3 / span 8; }
+
+  /* ── Section tag (shared small label) ── */
+  .tag{
+    display:block;
+    font-family:var(--mono); font-size:11px; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--ink-soft);
+    margin-bottom:14px;
+  }
+
+  /* ── Next up (in-progress teaser) ── */
+  .next{
+    padding:44px var(--gutter) 80px;
+    border-top:1px solid var(--line);
+    animation:riseIn .7s cubic-bezier(.22,1,.36,1) both;
+  }
+  .next-row{
+    display:flex; align-items:baseline; justify-content:space-between;
+    flex-wrap:wrap; gap:10px 24px;
+  }
+  .next-text{
+    font-family:var(--body); font-size:15px; color:var(--ink);
+  }
+  .next-text .moire{ color:var(--accent); }
+  .next-when{
+    font-family:var(--mono); font-size:11px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--ink-soft); white-space:nowrap;
+  }
+  .next-bar{
+    margin-top:20px; height:1px; background:var(--line); position:relative; overflow:hidden;
+  }
+  .next-bar::after{
+    content:''; position:absolute; left:0; top:0; bottom:0;
+    width:var(--progress, 55%);
+    background:var(--accent);
+  }
+
+  @media (max-width:780px){
+  }
 
   /* ── Footer ── */
   footer{
@@ -283,46 +329,19 @@
     body, a, button, .item, .album,
     .theme-toggle, .lightbox .close, .lightbox .arrow{ cursor:none; }
 
-    .cursor-dot, .cursor-ring{
+    .cursor-dot{
       position:fixed; top:0; left:0;
       pointer-events:none; z-index:200;
       mix-blend-mode:difference; /* visible on any background, both themes */
       opacity:0;
     }
-    body.cursor-active .cursor-dot,
-    body.cursor-active .cursor-ring{ opacity:1; }
+    body.cursor-active .cursor-dot{ opacity:1; }
 
     .cursor-dot{
       width:5px; height:5px;
       background:#fff; border-radius:50%;
       margin:-2.5px 0 0 -2.5px;
     }
-    .cursor-ring{
-      width:22px; height:22px;
-      margin:-11px 0 0 -11px;
-      border:1px solid #fff; border-radius:50%;
-      transition:width .25s ease, height .25s ease, margin .25s ease,
-                 border-radius .25s ease, border-color .25s ease, opacity .25s ease;
-    }
-
-    /* over links & buttons: ring tightens */
-    .cursor-ring.on-link{
-      width:32px; height:32px; margin:-16px 0 0 -16px;
-    }
-
-    /* over photos: ring becomes a viewfinder — square with corner brackets */
-    .cursor-ring.on-photo{
-      width:58px; height:58px; margin:-29px 0 0 -29px;
-      border-radius:0; border-color:transparent;
-    }
-    .cursor-ring::before, .cursor-ring::after{
-      content:''; position:absolute;
-      width:13px; height:13px;
-      opacity:0; transition:opacity .25s ease;
-    }
-    .cursor-ring::before{ top:0; left:0; border-top:1px solid #fff; border-left:1px solid #fff; }
-    .cursor-ring::after{ bottom:0; right:0; border-bottom:1px solid #fff; border-right:1px solid #fff; }
-    .cursor-ring.on-photo::before, .cursor-ring.on-photo::after{ opacity:1; }
   }
 
   @media (prefers-reduced-motion:reduce){
@@ -346,7 +365,6 @@
   <a href="#" class="wordmark"><span class="moire" data-text="GABRIELE COSSU">GABRIELE COSSU</span></a>
   <nav>
     <ul>
-      <li><a href="archives.html"><span class="moire" data-text="Archives">Archives</span></a></li>
       <li><a href="#contact"><span class="moire" data-text="Contact">Contact</span></a></li>
       <li><button class="theme-toggle" id="themeToggle" aria-label="Switch theme">[ Dark ]</button></li>
     </ul>
@@ -354,12 +372,20 @@
 </header>
 
 <section class="intro">
-  <p class="intro-text">Photography is a powerful introspective tool; more than once I found myself wondering what brought me there, to picture-frame that moment... maybe the beauty of it? [looking at the picture] so is this how I perceive beauty? but what is beauty? I'm going down this rabbit hole, exploring the noetic concept of beauty through my camera</p>
+  <p class="intro-text">Photography is a powerful introspective tool; more than once I found myself wondering what brought me there, to picture-frame that moment... Did I perceive its beauty? But what is that, exactly? To answer that question, I'll keep taking photos, exploring beauty as a noetic concept.</p>
 </section>
 
 <main id="work">
   <section class="grid" id="grid"></section>
 </main>
+
+<section class="next" id="next">
+  <div class="next-row">
+    <p class="next-text">Next up — <span class="moire" data-text="Working Title">Opera Viva</span></p>
+    <span class="next-when">Expected — Aug 2026</span>
+  </div>
+  <div class="next-bar" style="--progress:45%"></div>
+</section>
 
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
   <div class="box">
@@ -400,11 +426,27 @@ toggle.addEventListener('click', () => {
 
 /* ══════════ PROJECTS ══════════ */
 const projects = [
-  { title:"Granite Coastline",  cat:"Landscape", loc:"San Teodoro",       year:"2026", span:"p-half",   grad:"linear-gradient(135deg,#3c4a4f,#7c8b86)" },
-  { title:"Quiet Portrait",     cat:"Portrait",  loc:"Olbia",             year:"2026", span:"p-half",   grad:"linear-gradient(135deg,#8a6a4f,#cdb48f)" },
-  { title:"Market Morning",     cat:"Street",    loc:"Cagliari",          year:"2025", span:"p-center", grad:"linear-gradient(135deg,#6b5b4f,#b8881f)" },
-  { title:"Trail, First Light", cat:"Sport",     loc:"Monte Nieddu",      year:"2025", span:"p-half",   grad:"linear-gradient(135deg,#4f5a3c,#9fae7c)" },
-  { title:"Wide Open",          cat:"Landscape", loc:"Capo Coda Cavallo", year:"2026", span:"p-half",   grad:"linear-gradient(120deg,#111111,#3c4a4f,#cdb48f)" },
+  { title:"Granite Coastline",  cat:"Landscape", loc:"San Teodoro",       year:"2026", span:"p-center",
+    photos:[
+      "linear-gradient(135deg,#3c4a4f,#7c8b86)",
+      "linear-gradient(135deg,#2f3a3d,#5f6d68)",
+      "linear-gradient(140deg,#4a5a5e,#9fb3b8)",
+      "linear-gradient(130deg,#1e2426,#3c4a4f)",
+    ] },
+  { title:"Quiet Portrait",     cat:"Portrait",  loc:"Olbia",             year:"2026", span:"p-half",
+    photos:[
+      "linear-gradient(135deg,#8a6a4f,#cdb48f)",
+      "linear-gradient(140deg,#6b4f38,#a8815a)",
+      "linear-gradient(130deg,#cdb48f,#e8dcc4)",
+    ] },
+  { title:"Market Morning",     cat:"Street",    loc:"Cagliari",          year:"2025", span:"p-half",
+    photos:[
+      "linear-gradient(135deg,#6b5b4f,#b8881f)",
+      "linear-gradient(140deg,#4a3f36,#8a6f2f)",
+      "linear-gradient(130deg,#b8881f,#e0c164)",
+      "linear-gradient(125deg,#2e2823,#6b5b4f)",
+      "linear-gradient(135deg,#8a6f2f,#c9a44a)",
+    ] },
 ];
 
 const grid = document.getElementById('grid');
@@ -414,7 +456,8 @@ projects.forEach((p, i) => {
   el.style.setProperty('--d', `${(i % 2) * 0.12}s`); /* stagger pairs */
   el.innerHTML = `
     <div class="photo">
-      <div class="ph" style="background:${p.grad}"></div>
+      <div class="ph" style="background:${p.photos[0]}"></div>
+      <span class="photo-count">${String(p.photos.length).padStart(2,'0')} photos</span>
       <span class="placeholder-flag">placeholder</span>
     </div>
     <div class="cap">
@@ -422,7 +465,10 @@ projects.forEach((p, i) => {
       <div class="meta">${p.cat} / ${p.loc} / ${p.year}</div>
     </div>
   `;
-  el.addEventListener('click', () => openLightbox(i));
+  el.addEventListener('click', () => {
+    const albumSet = p.photos.map(grad => ({ grad, title:p.title, cat:p.cat, loc:p.loc, year:p.year }));
+    openLightbox(albumSet, 0);
+  });
   grid.appendChild(el);
 });
 
@@ -435,37 +481,39 @@ const io = new IntersectionObserver((entries) => {
     }
   });
 }, { threshold: 0.12 });
-document.querySelectorAll('.item').forEach(el => io.observe(el));
+document.querySelectorAll('.grid .item').forEach(el => io.observe(el));
 
 /* ══════════ LIGHTBOX with prev/next + keyboard ══════════ */
 const lightbox = document.getElementById('lightbox');
 const lbImg = document.getElementById('lbImg');
 const lbInfo = document.getElementById('lbInfo');
 const lbCounter = document.getElementById('lbCounter');
+let activeSet = projects;
 let current = 0;
 
 function renderLightbox(){
-  const p = projects[current];
+  const p = activeSet[current];
   lbImg.classList.add('swap');
   setTimeout(() => {
     lbImg.style.background = p.grad;
     lbInfo.textContent = `${p.title} — ${p.cat} / ${p.loc} / ${p.year}`;
-    lbCounter.textContent = `${String(current+1).padStart(2,'0')} / ${String(projects.length).padStart(2,'0')}`;
+    lbCounter.textContent = `${String(current+1).padStart(2,'0')} / ${String(activeSet.length).padStart(2,'0')}`;
     lbImg.classList.remove('swap');
   }, 130);
 }
 
-function openLightbox(i){
+function openLightbox(set, i){
+  activeSet = set;
   current = i;
-  const p = projects[current];
+  const p = activeSet[current];
   lbImg.style.background = p.grad;
   lbInfo.textContent = `${p.title} — ${p.cat} / ${p.loc} / ${p.year}`;
-  lbCounter.textContent = `${String(current+1).padStart(2,'0')} / ${String(projects.length).padStart(2,'0')}`;
+  lbCounter.textContent = `${String(current+1).padStart(2,'0')} / ${String(activeSet.length).padStart(2,'0')}`;
   lightbox.classList.add('open');
 }
 function closeLightbox(){ lightbox.classList.remove('open'); }
 function step(dir){
-  current = (current + dir + projects.length) % projects.length;
+  current = (current + dir + activeSet.length) % activeSet.length;
   renderLightbox();
 }
 
@@ -484,42 +532,16 @@ document.addEventListener('keydown', e => {
 /* ══════════ CUSTOM VIEWFINDER CURSOR ══════════ */
 if (window.matchMedia('(pointer:fine)').matches) {
   const dot = document.createElement('div');
-  const ring = document.createElement('div');
   dot.className = 'cursor-dot';
-  ring.className = 'cursor-ring';
-  document.body.append(dot, ring);
-
-  const reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
-  let mx = innerWidth / 2, my = innerHeight / 2; // mouse
-  let rx = mx, ry = my;                          // ring (trails behind)
+  document.body.append(dot);
 
   document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    dot.style.transform = `translate(${mx}px, ${my}px)`;
+    dot.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
     document.body.classList.add('cursor-active');
-
-    const t = e.target;
-    if (t.closest('.photo, .cover, .lightbox .box')) {
-      ring.classList.add('on-photo');
-      ring.classList.remove('on-link');
-    } else if (t.closest('a, button')) {
-      ring.classList.add('on-link');
-      ring.classList.remove('on-photo');
-    } else {
-      ring.classList.remove('on-photo', 'on-link');
-    }
   });
 
   document.addEventListener('mouseleave', () => document.body.classList.remove('cursor-active'));
   document.addEventListener('mouseenter', () => document.body.classList.add('cursor-active'));
-
-  (function loop(){
-    const ease = reduce ? 1 : 0.12; // no trailing if reduced motion
-    rx += (mx - rx) * ease;
-    ry += (my - ry) * ease;
-    ring.style.transform = `translate(${rx}px, ${ry}px)`;
-    requestAnimationFrame(loop);
-  })();
 }
 </script>
 
